@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kosmic-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "64m"
+    nginx.org/client-max-body-size: "64m"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: kosmic-backend
+                port:
+                  number: 5000
+          # - path: /login
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: kosmic-frontend
+          #       port:
+          #         number: 3000

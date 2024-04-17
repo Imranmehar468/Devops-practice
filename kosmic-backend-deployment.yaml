@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kosmic-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kosmic-backend
+  template:
+    metadata:
+      labels:
+        app: kosmic-backend
+    spec:
+      containers:
+      - name: kosmic-backend
+        image: 572751388225.dkr.ecr.us-east-1.amazonaws.com/kosmic-backend@sha256:82f91275ff3634006bc821406bf2bd2ccbefebdb54e2b73fc68b1c24aa11b70f
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kosmic-backend
+spec:
+  selector:
+    app: kosmic-backend
+  ports:
+  - port: 5000
+    targetPort: 5000
+  type: ClusterIP
